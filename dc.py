@@ -12,6 +12,10 @@ class Motor:
         self.a.pinMode(in1, a.OUTPUT)
         self.a.pinMode(in2, a.OUTPUT)
 
+    def stopMoving(self):
+        self.a.digitalWrite(self.in1, self.a.LOW)
+        self.a.digitalWrite(self.in2, self.a.LOW)
+
     def moveDown(self, speed = 200):
         self.a.digitalWrite(self.in1, self.a.HIGH)
         self.a.digitalWrite(self.in2, self.a.LOW)
@@ -25,7 +29,7 @@ class Motor:
 
 
 class MotorController:
-    def __init__(self, m1, m2):
+    def __init__(self, m1=Motor(), m2=Motor()):
         self.m1 = m1
         self.m2 = m2
 
@@ -33,8 +37,12 @@ class MotorController:
         self.m1.moveUp()
         self.m2.moveUp()
         sleep(duration)
+        self.m1.stopMoving()
+        self.m2.stopMoving()
 
     def moveDown(self, duration=2000):
         self.m1.moveDown()
         self.m2.moveDown()
         sleep(duration)
+        self.m1.stopMoving()
+        self.m2.stopMoving()
